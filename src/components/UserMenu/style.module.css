@@ -1,0 +1,68 @@
+
+.profileMenu {
+    position: relative;
+    z-index: 0;
+    margin-left: auto;
+  }
+  
+  .avContainer {
+    display: flex;
+    width: 64px;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 6px;
+  }
+  
+  .avContainer > img {
+    background-color: #ffffff;
+    border-radius: 50px;
+  }
+  
+  .dropDownBtn {
+    all: unset;
+  }
+  
+  .dropDown {
+    display: block;
+    padding: 7px 8px;
+    min-width: 134px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 125%;
+    right: 0;
+    z-index: 1;
+  }
+  
+  .dropDown > ul {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 100%;
+    row-gap: 3px;
+  }
+  
+  .dropDown>ul>li {
+    display: block;
+    list-style-type: none;
+    min-width: 100%;
+    color: #000000;
+    height: 22px;
+    cursor: url("./../../../public/cursor-pointer.svg"), pointer;
+  }
+  
+  .pimple {
+    width: 11px;
+    height: 11px;
+    background-color: #ffffff;
+    transform: rotate(45deg);
+    position: absolute;
+    top: -5.5px;
+    right: calc(64px - 20px - 5.5px);
+  }
+  
+  .dropDownItem > button {
+    all: unset;
+  }

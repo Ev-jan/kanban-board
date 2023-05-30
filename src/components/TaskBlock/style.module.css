@@ -1,0 +1,24 @@
+.category {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  padding: 12px;
+  background-color: #ebecf0;
+  border-radius: 10px;
+  height: max-content;
+}
+
+.category > h2 {
+  color: #000000;
+  font-weight: 400;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  text-align: start;
+}
+
+.category > ul {
+  display: flex;
+  min-width: 100%;
+  flex-flow: column nowrap;
+  row-gap: 15px;
+}

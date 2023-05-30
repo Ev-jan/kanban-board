@@ -1,0 +1,37 @@
+.addBtn,
+.submitBtn {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 102px;
+  height: 29px;
+  margin: 15px auto -4px 0;
+  border-radius: 5px;
+  cursor: url("./../../../public/cursor-pointer.svg"), pointer;
+}
+
+.addBtn {
+  color: #5e6c84;
+  font-weight: 400;
+  line-height: 21px;
+  font-size: 1.1rem;
+}
+
+.addBtn > span::before {
+  content: url("./../../../public/plus.svg");
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 4px;
+  height: 21px;
+}
+
+.submitBtn {
+  background-color: #0079bf;
+  color: #ffffff;
+}
+
+.addBtn:disabled {
+  background-color: #FFFFFF;
+  cursor: not-allowed;
+}

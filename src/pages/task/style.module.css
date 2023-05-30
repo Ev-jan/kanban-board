@@ -1,0 +1,36 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 30px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  height: 100%;
+  position: relative;
+  min-width: 1fr;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  margin-bottom: 35px;
+}
+
+.saveAndReturnBtn {
+  all: unset;
+  position: absolute;
+  top: 22px;
+  right: 30px;
+  cursor: url("./../../../public/cursor-pointer.svg"), pointer;
+}
+
+.textarea {
+    border: none;
+    outline: none;
+    width: 54%;
+    resize: none;
+    height: 100%;
+    font-size: 18px;
+    line-height: 21.09px;
+}

@@ -1,0 +1,13 @@
+.ticket {
+  padding: 7px 8px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  text-align: start;
+  transition: transform 0.5s ease-in-out;
+  list-style-type: none;
+  cursor: url("./../../../public/cursor-pointer.svg"), pointer;
+}
+
+.ticket:hover {
+  transform: scale(1.05);
+}

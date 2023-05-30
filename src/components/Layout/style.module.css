@@ -1,0 +1,14 @@
+.layout {
+    margin: 0 auto;
+    max-width: 1235px;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(55px, auto) 1fr minmax(55px, auto);
+}
+
+.mainContainer {
+    display: grid;
+    background-color: #0079BF;
+    padding: 20px;
+}

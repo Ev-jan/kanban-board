@@ -1,0 +1,20 @@
+.footer {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 5px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    min-height: 55px;
+    background-color: #0067A3;
+    padding: 20px;
+    color: #FFFFFF;
+    font-size: 1.1 rem;
+}
+
+.taskBlock {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    gap: 36px;
+}
