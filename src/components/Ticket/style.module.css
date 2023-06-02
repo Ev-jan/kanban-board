@@ -1,13 +1,21 @@
 .ticket {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   padding: 7px 8px;
   border-radius: 5px;
   background-color: #ffffff;
   text-align: start;
-  transition: transform 0.5s ease-in-out;
   list-style-type: none;
   cursor: url("./../../../public/cursor-pointer.svg"), pointer;
+  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  transition: all ease-in-out .5s;
 }
 
 .ticket:hover {
-  transform: scale(1.05);
+  color: #0079BF;
+  transform: translateX(5px);
 }

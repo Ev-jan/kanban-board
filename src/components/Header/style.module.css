@@ -1,10 +1,15 @@
 .header {
   display: flex;
   flex-flow: row wrap;
+  max-width: 100%;
+  height: 55px;
+  padding: 0 20px;
   justify-content: space-between;
   align-items: center;
   background-color: #0067a3;
-  padding: 20px;
+  position: relative;
+  z-index: 0;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -13,8 +18,17 @@
   color: #ffffff;
 }
 
+
+@media screen and (max-width: 768px) {
+  .header {
+    background-color: #0079BF;
+    height: calc(55px + 44.5px + 36px + 36px);
+  }
+}
+
 @media (max-width: 430px) {
   .logo {
     display: none;
   }
 }
+

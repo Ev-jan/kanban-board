@@ -1,16 +1,16 @@
-import { ITicket } from "../../types";
+import { ITicket, TicketGroup } from "../../types";
 import style from "./style.module.css";
 import { useNavigate } from 'react-router-dom';
 type TicketProps = {
     ticket: ITicket,
-    groupName: "Backlog" | "Ready" | "In Progress" | "Finished";
+    groupName: TicketGroup;
 }
 
 const Ticket:React.FC<TicketProps> = ({ticket, groupName}) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/${groupName}/${ticket.id}`, { state: { groupName, ticket } });
+        navigate(`/${groupName}/${ticket.id}`, { state: { ticket, groupName } });
     };
     
     return (
@@ -20,7 +20,6 @@ const Ticket:React.FC<TicketProps> = ({ticket, groupName}) => {
             >
             {ticket.name}
         </li>
-
     )
 }
 

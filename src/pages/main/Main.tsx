@@ -1,22 +1,21 @@
 import TaskBlock from "../../components/TaskBlock/TaskBlock";
+import { TicketGroup } from "../../types";
 import style from "./style.module.css"
-
-
 
 const Main = () => {
     return (
         <main className={style.main}>
             <TaskBlock
-                groupName="Backlog"
+                currentGroupName={TicketGroup.Backlog}
             />
             <TaskBlock
-                groupName="Ready"
+                currentGroupName={TicketGroup.Ready}
             />
             <TaskBlock
-                groupName="In Progress"
+                currentGroupName={TicketGroup.InProgress}
             />
             <TaskBlock
-                groupName="Finished"
+                currentGroupName={TicketGroup.Finished}
             />
         </main>
     )

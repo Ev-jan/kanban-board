@@ -1,31 +1,19 @@
 import Layout from './components/Layout/Layout';
 import React, { createContext, useEffect, useState } from "react";
-import { ITicketGroup } from "./types";
+import { ITicket, TicketGroup } from "./types";
 
 
 type AppContextProps = {
-  data: ITicketGroup[] | null;
-  updateData: (newData: ITicketGroup[]) => void
+  data: Map<TicketGroup, ITicket[]>;
+  updateData: (newData: Map<TicketGroup, ITicket[]>) => void
 }
 
-const initialData: ITicketGroup[] = [
-  {
-    groupName: "Backlog",
-    tickets: [],
-  },
-  {
-    groupName: "Ready",
-    tickets: [],
-  },
-  {
-    groupName: "In Progress",
-    tickets: [],
-  },
-  {
-    groupName: "Finished",
-    tickets: [],
-  },
-];
+const initialData: Map<TicketGroup, ITicket[]> = new Map([
+  [TicketGroup.Backlog, []],
+  [TicketGroup.Ready, []],
+  [TicketGroup.InProgress, []],
+  [TicketGroup.Finished, []],
+]);
 
 export const AppContext = createContext<AppContextProps>({
   data: initialData,
@@ -33,28 +21,45 @@ export const AppContext = createContext<AppContextProps>({
 });
 
 function App() {
-  const [data, setData] = useState<ITicketGroup[] | null>(initialData);
+  const [data, setData] = useState<Map<TicketGroup, ITicket[]>>(initialData);
+
   useEffect(() => {
     const storedJson = localStorage.getItem("data");
     if (storedJson) {
-      const parsedJson = JSON.parse(storedJson);
-      if (JSON.stringify(parsedJson) !== JSON.stringify(initialData)) {
+      const parsedJson = new Map<TicketGroup, ITicket[]>(JSON.parse(storedJson));
+      if (!areMapsEqual(parsedJson, initialData)) {
         setData(parsedJson);
       }
     }
   }, []);
 
-  const updateData = (newData: ITicketGroup[]) => {
+  function areMapsEqual(mapA: Map<any, any>, mapB: Map<any, any>): boolean {
+    if (mapA.size !== mapB.size) {
+      return false;
+    }
+  
+    let isEqual = true;
+  
+    mapA.forEach((value, key) => {
+      if (!mapB.has(key) || mapB.get(key) !== value) {
+        isEqual = false;
+      }
+    });
+  
+    return isEqual;
+  }
+  
+  const updateData = (newData: Map<TicketGroup, ITicket[]>) => {
     setData(newData);
-    localStorage.setItem("data", JSON.stringify(newData));
+    localStorage.setItem("data", JSON.stringify(Array.from(newData.entries())));
   };
 
   return (
-
-      <AppContext.Provider value={{ data, updateData }}>
-        <Layout />
-      </AppContext.Provider>
+    <AppContext.Provider value={{ data, updateData }}>
+      <Layout />
+    </AppContext.Provider>
   );
 }
+
 
 export default App;

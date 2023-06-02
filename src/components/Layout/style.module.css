@@ -5,10 +5,21 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: minmax(55px, auto) 1fr minmax(55px, auto);
+    grid-template-rows: minmax(55px, 8.355%) 83.286% minmax(55px, 8.355%);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
 }
 
 .mainContainer {
     display: grid;
     background-color: #0079BF;
     padding: 20px;
+    position: relative;
+    z-index: -1;
+    width: 100%;
+    height: calc(100vh - 110px);
 }
+
+

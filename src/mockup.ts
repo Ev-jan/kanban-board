@@ -1,5 +1,3 @@
-import { ITicketGroup } from "./types";
-
 const dataMock = [
     {
       groupName: 'Backlog',
@@ -82,4 +80,6 @@ const dataMock = [
       ]
     }
   ];
+
+  export default dataMock
   

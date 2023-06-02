@@ -3,20 +3,26 @@
     position: relative;
     z-index: 0;
     margin-left: auto;
+    font-size: 14px;
+    line-height: 16px;
   }
   
-  .avContainer {
+  .innerContainer {
     display: flex;
-    width: 64px;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
     column-gap: 6px;
   }
-  
-  .avContainer > img {
+
+  .avContainer {
+    content: "";
+    background: no-repeat url("./../../../public/user-avatar.svg") center;
+    background-size: cover;
     background-color: #ffffff;
     border-radius: 50px;
+    width: 38.4px;
+    height: 38.4px;
   }
   
   .dropDownBtn {
@@ -32,7 +38,7 @@
     position: absolute;
     top: 125%;
     right: 0;
-    z-index: 1;
+    z-index: 99;
   }
   
   .dropDown > ul {
@@ -51,6 +57,13 @@
     color: #000000;
     height: 22px;
     cursor: url("./../../../public/cursor-pointer.svg"), pointer;
+    transition: all ease-in-out .5s;
+  }
+
+  .dropDown>ul>li:hover {
+    display: block;
+    color: #0079BF;
+    transform: translateX(5px);
   }
   
   .pimple {
@@ -60,7 +73,7 @@
     transform: rotate(45deg);
     position: absolute;
     top: -5.5px;
-    right: calc(64px - 20px - 5.5px);
+    right: calc(58px - 20px - 5.5px);
   }
   
   .dropDownItem > button {

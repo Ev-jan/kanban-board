@@ -1,14 +1,19 @@
-.category {
+.ticketGroup {
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
   padding: 12px;
+  padding-right: 0;
   background-color: #ebecf0;
   border-radius: 10px;
-  height: max-content;
+  height: fit-content;
+  max-height: calc(100vh - 110px - 40px);;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-.category > h2 {
+.ticketGroup > h2 {
   color: #000000;
   font-weight: 400;
   font-size: 1.1rem;
@@ -16,9 +21,50 @@
   text-align: start;
 }
 
-.category > ul {
+.ticketList {
   display: flex;
-  min-width: 100%;
   flex-flow: column nowrap;
   row-gap: 15px;
+  padding-right: 12px;
+  width: calc(100% - 0px);
+  height: 50%;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+/* width */
+.ticketList::-webkit-scrollbar {
+  width: 12px;
+  border-radius: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cbcbcb;
+  border-radius: 5px;
+  height: 52px; /* Change this value to your desired height */
+}
+
+/* For Firefox */
+::-moz-scrollbar-thumb {
+  background: #cbcbcb;
+  border-radius: 5px;
+  height: 52px; /* Change this value to your desired height */
+}
+
+/* For Edge and IE */
+::-ms-scrollbar-thumb {
+  background: #cbcbcb;
+  border-radius: 5px;
+  height: 52px; /* Change this value to your desired height */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

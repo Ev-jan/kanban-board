@@ -1,129 +1,56 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../App";
-import { ITicket, ITicketGroup } from "../../types"
-import style from "./style.module.css"
+import { ITicket, TicketGroup } from "../../types";
+import style from "./style.module.css";
 import Input from "../Input/Input";
 import Ticket from "../Ticket/Ticket";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import { getPrevGroupName } from "../../utils";
+import { useTicketProcessing } from "../../utils";
 
 type TaskBlockProps = {
-  groupName: "Backlog" | "Ready" | "In Progress" | "Finished";
-}
+  currentGroupName: TicketGroup;
+};
 
-const TaskBlock: React.FC<TaskBlockProps> = (props) => {
-  const currentGroupName = props.groupName;
-  const [prevGroupName, setPrevGroupName] = useState<"Backlog" | "Ready" | "In Progress">("Backlog");
-  const [currentGroup, setCurrentGroup] = useState<ITicketGroup | undefined>(undefined);
-  const [prevGroup, setPrevGroup] = useState<ITicketGroup | undefined>(undefined);
-  const [inputValue, setInputValue] = useState<string>("");
+const TaskBlock: React.FC<TaskBlockProps> = ({ currentGroupName }) => {
+  const prevGroupName: TicketGroup | null = (getPrevGroupName(currentGroupName));
   const { data, updateData } = useContext(AppContext);
+  const [currentGroup, setCurrentGroup] = useState<ITicket[] | undefined>(undefined);
+  const [prevGroup, setPrevGroup] = useState<ITicket[] | undefined>(undefined);
+  const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
     if (data) {
-      const selectedGroup = data.find((selected) => selected.groupName.toLowerCase() === currentGroupName.toLowerCase());
+      const selectedGroup = data.get(currentGroupName);
       setCurrentGroup(selectedGroup);
     } else {
-      setCurrentGroup({
-        groupName: currentGroupName,
-        tickets: []
-      });
+      console.error("Current group not found in storage")
+      setCurrentGroup([]);
     }
-
   }, [data, currentGroupName]);
 
 
   useEffect(() => {
-    switch (currentGroupName) {
-      case "Backlog":
-        break;
-      case "Ready":
-        setPrevGroupName("Backlog");
-        break;
-      case "In Progress":
-        setPrevGroupName("Ready");
-        break;
-      case "Finished":
-        setPrevGroupName("In Progress");
-        break;
-    }
-    prevGroupName && data &&
-      setPrevGroup(data.find((selected) => selected.groupName.toLowerCase() === prevGroupName.toLowerCase()));
-  }, [currentGroupName, data, prevGroupName]);
+    if (data && prevGroupName)
+      setPrevGroup(data.get(prevGroupName));
+  }, [data, prevGroupName, currentGroupName]);
 
-  useEffect(() => {
-    if (inputValue.trim() === "") {
-      return
-    } else {
-      const newTicket: ITicket = {
-        id: uuidv4(),
-        name: inputValue,
-        description: "",
-      };
-
-      const targetIndex = data?.findIndex((group) => group.groupName === currentGroupName);
-      if (targetIndex !== -1 && data && targetIndex !== undefined) {
-        const updatedObject = { ...data[targetIndex] };
-        updatedObject.tickets = [...updatedObject.tickets, newTicket];
-        const updatedData = [
-          ...data.slice(0, targetIndex),
-          updatedObject,
-          ...data.slice(targetIndex + 1),
-        ];
-        const prevGroupIndex = data?.findIndex((group) => group.groupName === prevGroupName);
-        if (prevGroupIndex !== -1 && data && prevGroupIndex !== undefined && currentGroupName !== "Backlog") {
-          const prevGroup = { ...data[prevGroupIndex] };
-          prevGroup.tickets = prevGroup.tickets.filter((ticket) => ticket.name !== inputValue);
-
-          updatedData[prevGroupIndex] = prevGroup;
-        }
-        updateData(updatedData);
-      }
-    }
-  }, [inputValue])
-
-  // delete tickets from the previous group when moved to the current group
-
-  useEffect(() => {
-    if (currentGroup && prevGroup) {
-      const ticketName = inputValue;
-
-      const ticketExistsInCurrentGroup = currentGroup.tickets.some((ticket) => ticket.name === ticketName);
-      const ticketExistsInPrevGroup = prevGroup.tickets.some((ticket) => ticket.name === ticketName);
-
-      if (ticketExistsInCurrentGroup && ticketExistsInPrevGroup) {
-        const updatedPrevTickets = prevGroup.tickets.filter((ticket) => ticket.name !== ticketName);
-        setPrevGroup({
-          ...prevGroup,
-          groupName: prevGroupName,
-          tickets: updatedPrevTickets
-
-        })
-      }
-    }
-  }, [inputValue, currentGroup, prevGroup, prevGroupName])
-
+  useTicketProcessing(inputValue, currentGroupName, prevGroupName, data, updateData);
 
   const handleInputValueChange = (value: string) => {
     setInputValue(value);
   };
 
   return (
-    <section className={style.category}>
+    <section className={style.ticketGroup}>
       <h2 className={style.title}>{currentGroupName}</h2>
-      <ul>
+      <ul className={style.ticketList}>
         {currentGroup &&
-          currentGroup.tickets.map((ticket) => (
-            <Ticket
-            key={ticket.id}
-            ticket={ticket}
-            groupName={currentGroupName}
-            />
+          currentGroup.map((ticket) => (
+            <Ticket key={ticket.id} ticket={ticket} groupName={currentGroupName} />
           ))}
       </ul>
-      <Input
-        groupName={currentGroupName}
-        onInputChange={handleInputValueChange}
-        selectOptions={prevGroup} />
+      <Input groupName={currentGroupName} onInputChange={handleInputValueChange} selectOptions={prevGroup} />
     </section>
   );
 };

@@ -7,14 +7,24 @@
     max-width: 100%;
     min-height: 55px;
     background-color: #0067A3;
-    padding: 20px;
+    padding: 0 20px;
     color: #FFFFFF;
-    font-size: 1.1 rem;
+    font-size: 1rem;
 }
 
-.taskBlock {
+.taskStatusCount {
     display: flex;
     align-items: center;
     flex-flow: row wrap;
-    gap: 36px;
+    justify-content: space-between;
+    width: 335px;
+    gap: 5px;
 }
+
+@media screen and (max-width: 768px) {
+    .footer {
+      background-color: #0079BF;
+      font-size: .6rem;
+      gap: 2px;
+    }
+  }

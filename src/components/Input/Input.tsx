@@ -1,124 +1,118 @@
-import { useEffect, useRef, useState } from "react";
-import style from "./style.module.css"
-import { ITicketGroup } from "../../types";
-import Select, { SingleValue } from 'react-select'
+import { useRef, useState } from "react";
+import style from "./style.module.css";
+import { ITicket, TicketGroup } from "../../types";
+import Select, { SingleValue } from 'react-select';
 import Button from "../Button/Button";
+import { useCloseOnClickOutside } from "../../utils";
 
 type InputProps = {
-    groupName: "Backlog" | "Ready" | "In Progress" | "Finished";
-    onInputChange: (inputValue: string) => void;
-    selectOptions?: ITicketGroup;
-}
+  groupName: TicketGroup;
+  onInputChange: (inputValue: string) => void;
+  selectOptions?: ITicket[];
+};
 
 const Input: React.FC<InputProps> = ({ groupName, onInputChange, selectOptions }) => {
-    const outerRef = useRef<HTMLDivElement>(null);
-    const [isInputHidden, setIsInputHidden] = useState(true);
-    const [inputValue, setInputValue] = useState("");
-    const [selectedOption, setSelectedOption] = useState<SingleValue<{ label: string; value: string }> | null>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const [isInputHidden, setIsInputHidden] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+  const [selectedOption, setSelectedOption] = useState<SingleValue<{ label: string; value: string }> | null>(null);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
-    };
+  const handleSelectChange = (newValue: SingleValue<{ label: string; value: string }>) => {
+    setSelectedOption(newValue);
+    setInputValue(newValue ? newValue.value : "");
+  };
 
-    const handleSelectChange = (
-        newValue: SingleValue<{ label: string; value: string }>,
-    ) => {
-        setSelectedOption(newValue);
-        setInputValue(newValue ? newValue.value : "");
-    };
-
-    const handleButtonClick = () => {
-        if (inputValue.trim().length === 0) {
-            isInputHidden ? setIsInputHidden(false) : setIsInputHidden(true)
-        } else {
-            onInputChange(inputValue);
-            setInputValue("");
-            setSelectedOption(null);
-            setIsInputHidden(true);
-        }
+  const handleButtonClick = () => {
+    if (inputValue.trim().length === 0) {
+      setIsInputHidden((prevIsInputHidden) => !prevIsInputHidden);
+    } else {
+      onInputChange(inputValue);
+      setInputValue("");
+      setSelectedOption(null);
+      setIsInputHidden(true);
     }
+  };
 
-    const handleClearSelection = () => {
-        setIsInputHidden(true)
-        setSelectedOption(null);
-        setInputValue("");
-    };
+  const handleClearSelection = () => {
+    setIsInputHidden(true);
+    setSelectedOption(null);
+    setInputValue("");
+  };
 
-    // clear selected option on click outside the <select> element
+  useCloseOnClickOutside(outerRef, ".inner__menu", handleClearSelection)
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const targetElement = event.target as Element;
-            const isClickInsideDropdown =
-                targetElement?.closest(".inner__menu") !== null;
+  return (
+    <div className={style.inputWrapper} ref={outerRef}>
+      {groupName === TicketGroup.Backlog && !isInputHidden && (
+        <input
+          className={style.input}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+      )}
+      {!isInputHidden && selectOptions?.length !== 0 && groupName !== TicketGroup.Backlog && (
+        <Select
+          className={style.select}
+          classNamePrefix={"inner"}
+          options={selectOptions?.map((ticket) => ({
+            label: ticket.name,
+            value: ticket.name,
+          }))}
+          value={selectedOption}
+          onChange={handleSelectChange}
+          placeholder={"Select task..."}
+          menuPortalTarget={document.body}
+          menuPosition={"fixed"}
+          styles={{
+            control: (provided) => ({
+              ...provided,
+              border: "none",
+            }),
+            indicatorSeparator: (base) => ({
+              ...base,
+              display: "none",
+            }),
+            dropdownIndicator: (base) => ({
+              ...base,
+              padding: "0 10px",
+            }),
+            indicatorsContainer: (base) => ({
+              ...base,
+              padding: "0 10px",
+            }),
+            placeholder: (base) => ({
+              ...base,
+              color: "#000000",
+            }),
+            menuPortal: (base) => ({
+              ...base,
+              zIndex: 9999,
+            }),
+            menu: (base) => ({
+              ...base,
+              maxHeight: "60px",
 
-            if (outerRef.current && !outerRef.current.contains(event.target as Node) &&
-                !isClickInsideDropdown) {
-                handleClearSelection();
-            }
-        };
-        document.addEventListener("click", handleClickOutside);
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, []);
+            }),
+            option: (base) => ({
+              ...base,
+              cursor: "url('./cursor-pointer.svg'), pointer",
+              backgroundColor: "white",
+              overflowX: "hidden"
+            }),
+          }}
+        />
+      )}
+      <Button
+        handleButtonClick={handleButtonClick}
+        isInputHidden={isInputHidden}
+        inputValue={inputValue}
+      />
+    </div>
+  );
+};
 
-    return (
-        <div className={style.inputWrapper} ref={outerRef}>
-            {groupName === "Backlog" ? (
-                !isInputHidden &&
-                <input
-                    className={style.input}
-                    type="text"
-                    value={inputValue}
-                    onChange={handleInputChange} />
-            ) : (
-                !isInputHidden && selectOptions?.tickets.length !== 0 ?
-                    (<Select
-                        className={style.select}
-                        classNamePrefix={"inner"}
-                        options={selectOptions?.tickets.map((ticket) => ({
-                            label: ticket.name,
-                            value: ticket.name,
-                        }))}
-                        value={selectedOption}
-                        onChange={handleSelectChange}
-                        placeholder={"Select task..."}
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                border: "none",
-                            }),
-                            indicatorSeparator: (provided) => ({
-                                ...provided,
-                                display: "none",
-                            }),
-                            dropdownIndicator: (provided) => ({
-                                ...provided,
-                                padding: "0 10px"
-                            }),
-                            indicatorsContainer: (provided) => ({
-                                ...provided,
-                                padding: "0 10px",
-                            }),
-                            placeholder: (provided) => ({
-                                ...provided,
-                                color: "#000000"
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: "url('./cursor-pointer.svg'), pointer"
-                            }),
-                        }}
-                    ></Select>) : null
-            )}
-            <Button
-                handleButtonClick={handleButtonClick}
-                isInputHidden={isInputHidden}
-                inputValue={inputValue}
-            />
-        </div>
-    )
-}
-
-export default Input
+export default Input;
