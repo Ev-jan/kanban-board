@@ -16,6 +16,8 @@ const Input: React.FC<InputProps> = ({ groupName, onInputChange, selectOptions }
   const [isInputHidden, setIsInputHidden] = useState(true);
   const [inputValue, setInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState<SingleValue<{ label: string; value: string }> | null>(null);
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -45,17 +47,24 @@ const Input: React.FC<InputProps> = ({ groupName, onInputChange, selectOptions }
   useCloseOnClickOutside(outerRef, ".inner__menu", handleClearSelection)
 
   return (
-    <div className={style.inputWrapper} ref={outerRef}>
+    <div
+      data-testid="input-element"
+      className={style.inputWrapper}
+      ref={outerRef}
+    >
       {groupName === TicketGroup.Backlog && !isInputHidden && (
         <input
+          data-testid="input-field"
           className={style.input}
           type="text"
           value={inputValue}
           onChange={handleInputChange}
+
         />
       )}
       {!isInputHidden && selectOptions?.length !== 0 && groupName !== TicketGroup.Backlog && (
         <Select
+        data-testid="select-field"
           className={style.select}
           classNamePrefix={"inner"}
           options={selectOptions?.map((ticket) => ({

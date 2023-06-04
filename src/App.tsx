@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { ITicket, TicketGroup } from "./types";
 
 
-type AppContextProps = {
+export type AppContextProps = {
   data: Map<TicketGroup, ITicket[]>;
   updateData: (newData: Map<TicketGroup, ITicket[]>) => void
 }

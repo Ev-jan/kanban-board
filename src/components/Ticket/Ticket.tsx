@@ -16,6 +16,7 @@ const Ticket:React.FC<TicketProps> = ({ticket, groupName}) => {
     return (
         <li
             className={style.ticket}
+            data-id={ticket.id}
             onClick={handleClick}
             >
             {ticket.name}

@@ -4,7 +4,6 @@ import { ITicket, TicketGroup } from "../../types";
 import style from "./style.module.css";
 import Input from "../Input/Input";
 import Ticket from "../Ticket/Ticket";
-import { v4 as uuidv4 } from "uuid";
 import { getPrevGroupName } from "../../utils";
 import { useTicketProcessing } from "../../utils";
 
@@ -42,8 +41,8 @@ const TaskBlock: React.FC<TaskBlockProps> = ({ currentGroupName }) => {
   };
 
   return (
-    <section className={style.ticketGroup}>
-      <h2 className={style.title}>{currentGroupName}</h2>
+    <section className={style.ticketGroup} data-testid="task-block">
+      <h2 className={style.title} data-testid="task-block-title">{currentGroupName}</h2>
       <ul className={style.ticketList}>
         {currentGroup &&
           currentGroup.map((ticket) => (
