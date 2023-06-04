@@ -28,8 +28,8 @@ const Footer: React.FC = () => {
     return (
         <footer className={style.footer}>
             <div className={style.taskStatusCount}>
-                <p className={style.activeTasks}>Active tasks: {activeTasks}</p>
-                <p className={style.finishedTasks}>Finished tasks: {finishedTasks}</p>
+                <p className={style.activeTasks} data-testid="activeTaskCount">Active tasks: {activeTasks}</p>
+                <p className={style.finishedTasks} data-testid="finishedTaskCount">Finished tasks: {finishedTasks}</p>
             </div>
             <p className={style.copyright}>Kanban board by Evgen, 2023</p>
         </footer>
