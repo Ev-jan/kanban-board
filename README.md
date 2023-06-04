@@ -6,8 +6,8 @@ Users can easily track the progress of their tasks and collaborate with team mem
 
 ## Features
 
-Create tasks, view and edit detailed descriptions
-Responsive design for optimal viewing on different devices
+- Create tasks, view and edit detailed descriptions
+- Responsive design for optimal viewing on different devices
 
 ## Technologies Used
 The Kanban board project is built using the following technologies and frameworks:
