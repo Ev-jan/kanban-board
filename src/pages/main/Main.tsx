@@ -1,22 +1,16 @@
 import TaskBlock from "../../components/TaskBlock/TaskBlock";
 import { TicketGroup } from "../../types";
-import style from "./style.module.css"
+import style from "./style.module.css";
 
-const Main = () => {
+
+type MainProps = {
+    ticketGroups: { groupName: TicketGroup }[]
+}
+
+const Main: React.FC<MainProps> = ({ ticketGroups }) => {
     return (
         <main className={style.main}>
-            <TaskBlock
-                currentGroupName={TicketGroup.Backlog}
-            />
-            <TaskBlock
-                currentGroupName={TicketGroup.Ready}
-            />
-            <TaskBlock
-                currentGroupName={TicketGroup.InProgress}
-            />
-            <TaskBlock
-                currentGroupName={TicketGroup.Finished}
-            />
+            {ticketGroups.map((group, index) => (<TaskBlock key={index} currentGroupName={group.groupName} />))}
         </main>
     )
 }

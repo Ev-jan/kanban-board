@@ -4,6 +4,9 @@ import Footer from "../Footer/Footer"
 import TaskPage from "../../pages/task/TaskPage"
 import Main from "../../pages/main/Main"
 import { Route, Routes } from 'react-router-dom';
+import { TicketGroup } from "../../types"
+
+const ticketGroups = [{ groupName: TicketGroup.Backlog }, { groupName: TicketGroup.Ready }, { groupName: TicketGroup.InProgress }, { groupName: TicketGroup.Finished }]
 
 const Layout: React.FC = () => {
     return (
@@ -11,7 +14,7 @@ const Layout: React.FC = () => {
             <Header />
             <div className={style.mainContainer}>
                 <Routes>
-                    <Route path='/' element={<Main/>}></Route>
+                    <Route path='/' element={<Main ticketGroups={ticketGroups}/>}></Route>
                     <Route path="/:groupName/:ticketId" element={<TaskPage />}></Route>
                 </Routes>
             </div>
