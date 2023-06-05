@@ -1,0 +1,9 @@
+{
+  "short_name": "Kanban Board",
+  "name": "Kanban Board by Evgeny Mazyar",
+  "icons": [
+
+  ],
+  "start_url": ".",
+  "display": "standalone"
+}
