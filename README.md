@@ -22,7 +22,7 @@ The Kanban board project is built using the following technologies and framework
 ## Installation and Usage
 To run the Kanban board project locally, follow these steps:
 
-- Clone the repository: git clone <repository-url>
+- Clone the repository: git clone
 - Install the dependencies: npm install
 - Start the development server: npm start
-- Open the application in your browser: http://localhost:3000
+- Open the application in your browser
