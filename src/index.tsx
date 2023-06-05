@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/kanban-board">
       <App />
     </BrowserRouter>
   </React.StrictMode>
