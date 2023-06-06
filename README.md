@@ -26,4 +26,6 @@ To run the Kanban board project locally, follow these steps:
 - Install the dependencies: npm install
 - Start the development server: npm start
 - Open the application in your browser
-You can access the deployed version by clicking on the following link: https://kanbanboard-735c2.web.app/
+
+
+#### You can access the deployed version by clicking on the following link: https://kanbanboard-735c2.web.app/
